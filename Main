@@ -1,0 +1,100 @@
+package misPaquetes;
+import java.util.HashMap;//Importar HashMap
+import java.util.Scanner;//Importar Scanner para el usuario
+//Clase Principal
+public class Main {
+    private HashMap<Integer, Animal> animales;
+
+    public Main() {
+        animales = new HashMap<>();
+    }
+
+    public void altaAnimal(Animal animal) {
+        if (animales.containsKey(animal.getNumeroChip())) {
+            System.out.println("Error: Ya existe un animal con el número de chip " + animal.getNumeroChip());
+        } else {
+            animales.put(animal.getNumeroChip(), animal);
+            System.out.println("Animal registrado con éxito");
+        }
+    }
+
+    public void buscarAnimal(int numeroChip) {
+        Animal animal = animales.get(numeroChip);
+        if (animal != null) {
+            animal.mostrar();
+        } else {
+            System.out.println("No se encontró ningún animal con el chip " + numeroChip);
+        }
+    }
+
+    public static void main(String[] args) {
+        Main sistema = new Main();
+        Scanner scanner = new Scanner(System.in);
+        //Menú para elegir las opciones 
+        while (true) {
+            System.out.println("1. Registrar Perro");
+            System.out.println("2. Registrar Gato");
+            System.out.println("3. Buscar Animal");
+            System.out.println("4. Salir");
+            System.out.print("Seleccione una opción: ");
+            
+            int opcion = scanner.nextInt();
+            
+            if (opcion == 4) {
+                break;
+            }
+
+            switch (opcion) {
+            case 1: // Registrar Perro
+                System.out.print("Número de chip: ");
+                int chipPerro = scanner.nextInt();
+                scanner.nextLine();
+                System.out.print("Nombre: ");
+                String nombrePerro = scanner.nextLine();
+                System.out.print("Edad: ");
+                int edadPerro = scanner.nextInt();
+                scanner.nextLine();
+                System.out.print("Raza: ");
+                String razaPerro = scanner.nextLine();
+                System.out.print("¿Adoptado? (s/n): ");
+                boolean adoptadoPerro = scanner.nextLine().equalsIgnoreCase("s");//Metodo para que no importen mayúsculas o minúsculas
+                System.out.print("Tamaño (pequeño/mediano/grande): ");
+                String tamano = scanner.nextLine();
+                Perro perro = new Perro(chipPerro, nombrePerro, edadPerro, razaPerro, adoptadoPerro, tamano);
+                sistema.altaAnimal(perro);
+                break;
+
+            case 2: // Registrar Gato
+                System.out.print("Número de chip: ");
+                int chipGato = scanner.nextInt();
+                scanner.nextLine();
+                System.out.print("Nombre: ");
+                String nombreGato = scanner.nextLine();
+                System.out.print("Edad: ");
+                int edadGato = scanner.nextInt();
+                scanner.nextLine();
+                System.out.print("Raza: ");
+                String razaGato = scanner.nextLine();
+                System.out.print("¿Adoptado? (s/n): ");
+                boolean adoptadoGato = scanner.nextLine().equalsIgnoreCase("s");
+                System.out.print("¿Test leucemia positivo? (s/n): ");
+                boolean test = scanner.nextLine().equalsIgnoreCase("s");
+                Gato gato = new Gato(chipGato, nombreGato, edadGato, razaGato, adoptadoGato, test);
+                sistema.altaAnimal(gato);
+                break;
+
+            case 3: // Buscar Animal
+                System.out.print("Ingrese el número de chip a buscar: ");
+                int chipBuscar = scanner.nextInt();
+                scanner.nextLine();
+                sistema.buscarAnimal(chipBuscar);
+                break;
+
+            default:
+                System.out.println("Opción no válida");
+                break;
+        }
+    }
+    scanner.close();
+}
+}
